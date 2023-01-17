@@ -21,7 +21,15 @@ nav {
   color: #fff;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  align-items: center;
 }
 
 nav img:first-of-type {
@@ -30,7 +38,7 @@ nav img:first-of-type {
   margin-right: auto;
 }
 
-nav img:not(:first-of-type) {
+nav ul img:first-of-type {
   width: 20px;
   height: 20px;
   margin: 0 8px 0 16px;

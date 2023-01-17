@@ -388,12 +388,20 @@ function NavBar({state}) {
         src="https://assets.ccbp.in/frontend/react-js/match-game-website-logo.png"
         alt="website logo"
       />
-      <p>Score: {score}</p>
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/match-game-timer-img.png"
-        alt="timer"
-      />
-      <p>{timer} sec</p>
+      <ul>
+        <li>
+          <p>Score:{score}</p>
+        </li>
+        <li>
+          <img
+            src="https://assets.ccbp.in/frontend/react-js/match-game-timer-img.png"
+            alt="timer"
+          />
+        </li>
+        <li>
+          <p>{timer} sec</p>
+        </li>
+      </ul>
     </nav>
   )
 }

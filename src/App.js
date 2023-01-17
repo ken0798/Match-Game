@@ -1,3 +1,4 @@
+import {Component} from 'react'
 import './App.css'
 
 // These are the lists used in the application. You can move them to any component needed.
@@ -247,6 +248,176 @@ const imagesList = [
 ]
 
 // Replace your code here
-const App = () => <div>Hello World</div>
+
+class App extends Component {
+  state = {
+    score: 0,
+    timer: 60,
+    currentPic: imagesList[0],
+    activeCategory: tabsList[0].tabId,
+    timerId: null,
+    showGreetings: true,
+  }
+
+  componentDidMount() {
+    this.ticker()
+  }
+
+  componentWillUnmount() {
+    const {timerId} = this.state
+    clearInterval(timerId)
+  }
+
+  ticker = () => {
+    let {timerId} = this.state
+    timerId = setInterval(() => {
+      const {timer} = this.state
+      if (timer > 0) {
+        this.setState(pre => ({
+          timer: pre.timer - 1,
+        }))
+      } else {
+        this.setState({
+          showGreetings: false,
+        })
+        clearInterval(timerId)
+      }
+    }, 1000)
+    this.setState({
+      timerId,
+    })
+  }
+
+  displayRandomPic = () => {
+    this.setState({
+      currentPic:
+        imagesList[Math.floor(Math.random() * (imagesList.length - 1))],
+    })
+  }
+
+  sortCategoryList = () => {
+    const {activeCategory} = this.state
+    return imagesList.filter(item => item.category === activeCategory)
+  }
+
+  gainPoints = id => {
+    const {currentPic, timerId} = this.state
+    if (id === currentPic.id) {
+      this.setState(pre => ({
+        score: pre.score + 1,
+      }))
+      this.displayRandomPic()
+    } else {
+      clearInterval(timerId)
+      this.setState({
+        showGreetings: false,
+      })
+    }
+  }
+
+  playAgain = () => {
+    this.setState({
+      showGreetings: true,
+      timer: 60,
+      score: 0,
+      currentPic: imagesList[0],
+    })
+    this.ticker()
+  }
+
+  render() {
+    const {currentPic, activeCategory, score, showGreetings} = this.state
+    const displayPic = currentPic
+    const categoryThumbnail = this.sortCategoryList()
+    return (
+      <section className="main-container">
+        <NavBar state={this.state} />
+        {showGreetings ? (
+          <div className="content_layer">
+            <div className="match_pic">
+              <img src={displayPic.imageUrl} alt="match" />
+            </div>
+            <ul className="tab_layer">
+              {tabsList.map(item => (
+                <li key={item.tabId}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      this.setState({
+                        activeCategory: item.tabId,
+                      })
+                    }
+                    className={
+                      activeCategory === item.tabId ? 'text_active' : ''
+                    }
+                  >
+                    {item.displayText}{' '}
+                    {activeCategory === item.tabId && <hr className="active" />}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <ul className="thumbnail_layer">
+              {categoryThumbnail.map(item => (
+                <li key={item.id}>
+                  <button
+                    type="button"
+                    onClick={() => this.gainPoints(item.id)}
+                  >
+                    <img src={item.thumbnailUrl} alt="thumbnail" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <GreetModal score={score} play={this.playAgain} />
+        )}
+      </section>
+    )
+  }
+}
 
 export default App
+
+function NavBar({state}) {
+  const {score, timer} = state
+  return (
+    <nav>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/match-game-website-logo.png"
+        alt="website logo"
+      />
+      <p>Score: {score}</p>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/match-game-timer-img.png"
+        alt="timer"
+      />
+      <p>{timer} sec</p>
+    </nav>
+  )
+}
+
+function GreetModal({score, play}) {
+  return (
+    <div className="greet_bg">
+      <div className="do">
+        <img
+          className="trophy"
+          src="https://assets.ccbp.in/frontend/react-js/match-game-trophy.png"
+          alt="trophy"
+        />
+        <p>YOUR SCORE</p>
+        <p>{score}</p>
+        <button type="button" onClick={play} className="play_btn">
+          <img
+            className="reset"
+            src="https://assets.ccbp.in/frontend/react-js/match-game-play-again-img.png"
+            alt="reset"
+          />
+          PLAY AGAIN
+        </button>
+      </div>
+    </div>
+  )
+}

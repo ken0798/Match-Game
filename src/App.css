@@ -1,5 +1,9 @@
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -9,4 +13,154 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+nav {
+  background-color: #2c0e3a;
+  padding: 1rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+nav img:first-of-type {
+  width: 220px;
+  height: 50px;
+  margin-right: auto;
+}
+
+nav img:not(:first-of-type) {
+  width: 20px;
+  height: 20px;
+  margin: 0 8px 0 16px;
+}
+
+nav p {
+  color: #fec653;
+  font-size: 20px;
+}
+
+.main-container {
+  width: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/match-game-bg.png');
+}
+
+.content_layer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.match_pic {
+  width: 50%;
+}
+.match_pic img {
+  width: 100%;
+  border-radius: 10px;
+}
+.tab_layer {
+  margin-top: 2rem;
+  width: 50%;
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 1rem;
+}
+
+.tab_layer li {
+  flex-basis: 50%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tab_layer button {
+  display: inline-block;
+  width: fit-content;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+}
+
+.text_active {
+  color: #fec653;
+}
+.active {
+  margin-top: 0.25rem;
+  border-color: #fec653;
+}
+
+.thumbnail_layer {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.thumbnail_layer button {
+  background: none;
+  border: none;
+}
+
+.thumbnail_layer img {
+  width: 150px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.greet_bg {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/match-game-score-card-lg-bg.png');
+  width: 50%;
+  height: 660px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.trophy {
+  width: 330px;
+  height: 200px;
+}
+.reset {
+  width: 20px;
+  height: 20px;
+}
+
+.do {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  top: 45%;
+}
+
+.do span {
+  font-size: 20px;
+}
+
+.do > span:last-of-type {
+  margin: 12px;
+}
+
+.play_btn {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: #cf60c8;
+  gap: 1rem;
+  cursor: pointer;
+  border: none;
 }
